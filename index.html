@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12345a">
+<title>Tejas Institute | Online Examination</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="logo">TI</div><div><strong>TEJAS INSTITUTE</strong><small>ONLINE EXAMINATION PORTAL</small></div></div>
+  <button class="lang" id="langBtn">हिंदी</button>
+</header>
+<main>
+<section id="loginView" class="panel login-panel">
+  <div class="eyebrow" data-en="WELCOME" data-hi="स्वागत है">WELCOME</div>
+  <h1 data-en="Online Examination" data-hi="ऑनलाइन परीक्षा">Online Examination</h1>
+  <p class="muted" data-en="Sign in with the ID and password provided by your institute." data-hi="संस्थान द्वारा दी गई आईडी और पासवर्ड से लॉगिन करें।">Sign in with the ID and password provided by your institute.</p>
+  <form id="loginForm">
+    <label data-en="User ID" data-hi="यूज़र आईडी">User ID</label><input id="userId" autocomplete="username" required placeholder="e.g. TI1001">
+    <label data-en="Password" data-hi="पासवर्ड">Password</label><input id="password" type="password" autocomplete="current-password" required>
+    <button class="primary full" type="submit" data-en="Login" data-hi="लॉगिन करें">Login</button>
+  </form>
+  <div class="demo-note"><b>Demo access</b><br>Admin: <code>admin</code> / <code>Tejas@123</code><br>Student: <code>TI1001</code> / <code>student123</code></div>
+  <p class="tiny warning">Demo only: credentials and results are stored in this browser. Do not use real student data until a secure backend is connected.</p>
+</section>
+
+<section id="adminView" class="hidden">
+  <div class="welcome-row"><div><div class="eyebrow">ADMIN DASHBOARD</div><h1 data-en="Manage examinations" data-hi="परीक्षाओं का प्रबंधन">Manage examinations</h1></div><button class="outline" id="logoutAdmin">Logout</button></div>
+  <div class="stats"><div class="stat"><b id="studentCount">1</b><span data-en="Students" data-hi="विद्यार्थी">Students</span></div><div class="stat"><b id="examCount">1</b><span data-en="Exams" data-hi="परीक्षाएँ">Exams</span></div><div class="stat"><b id="resultCount">0</b><span data-en="Submissions" data-hi="जमा उत्तर">Submissions</span></div></div>
+  <div class="grid two">
+    <section class="panel"><h2 data-en="Create exam" data-hi="नई परीक्षा बनाएँ">Create exam</h2>
+      <form id="examForm">
+        <label>Exam name / परीक्षा का नाम</label><input id="examTitle" required placeholder="Class 10 Science Mock Test">
+        <div class="grid two"><div><label>Class / कक्षा</label><select id="examClass"><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option selected>Class 10</option><option>Class 11</option><option>Class 12</option></select></div><div><label>Subject / विषय</label><input id="examSubject" required placeholder="Science / विज्ञान"></div></div>
+        <div class="grid two"><div><label>Duration (minutes)</label><input id="duration" type="number" min="1" value="60" required></div><div><label>Marks per question</label><input id="perMark" type="number" min="0.25" step="0.25" value="1" required></div></div>
+        <label>Negative marking (e.g. 0.25; enter 0 for none)</label><input id="negative" type="number" min="0" step="0.25" value="0.25">
+        <button class="primary full" type="submit">Create exam</button>
+      </form>
+    </section>
+    <section class="panel"><h2>Upload questions / प्रश्न जोड़ें</h2>
+      <p class="muted small">Select an exam, then add MCQs. This first version supports text questions and four options.</p>
+      <label>Select exam</label><select id="questionExam"></select>
+      <form id="questionForm">
+        <label>Question / प्रश्न</label><textarea id="questionText" required rows="3"></textarea>
+        <div class="grid two"><div><label>Option A</label><input id="optA" required></div><div><label>Option B</label><input id="optB" required></div><div><label>Option C</label><input id="optC" required></div><div><label>Option D</label><input id="optD" required></div></div>
+        <label>Correct option</label><select id="correct"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+        <button class="primary full" type="submit">Add question</button>
+      </form>
+      <div id="questionCount" class="tiny muted"></div>
+    </section>
+  </div>
+  <section class="panel"><div class="section-head"><h2>Exams / परीक्षाएँ</h2><button class="outline" id="exportBtn">Export results CSV</button></div><div id="examList"></div></section>
+  <section class="panel"><h2>Student accounts / विद्यार्थी खाते</h2><form id="studentForm" class="grid two"><div><label>Student name</label><input id="studentName" required></div><div><label>Student ID</label><input id="studentNewId" required></div><div><label>Password</label><input id="studentNewPassword" required></div><div><label>Class</label><select id="studentClass"></select></div><button class="primary" type="submit">Add student</button></form><div id="studentList" class="list"></div></section>
+</section>
+
+<section id="studentView" class="hidden">
+  <div class="welcome-row"><div><div class="eyebrow">STUDENT PANEL</div><h1 id="studentWelcome">Welcome</h1><p class="muted" id="studentClassLabel"></p></div><button class="outline" id="logoutStudent">Logout</button></div>
+  <section class="panel"><h2>Available examinations / उपलब्ध परीक्षाएँ</h2><div id="availableExams"></div></section>
+  <section class="panel"><h2>My results / मेरे परिणाम</h2><div id="myResults"></div></section>
+</section>
+
+<section id="examView" class="hidden">
+  <div class="exam-head"><div><div class="eyebrow" id="examMeta"></div><h2 id="examHeading"></h2></div><div class="timer" id="timer">60:00</div></div>
+  <div class="progress"><div id="progressBar"></div></div>
+  <div class="exam-layout">
+    <section class="panel question-panel"><div class="question-top"><span id="questionNumber">Question 1</span><span id="answeredLabel">Answered 0</span></div><h3 id="liveQuestion"></h3><div id="liveOptions" class="options"></div>
+      <div class="exam-actions"><button class="outline" id="previousBtn">Previous</button><button class="primary" id="saveNextBtn">Save & Next</button></div>
+      <button class="text-btn" id="reviewBtn">☆ Mark for review</button>
+    </section>
+    <aside class="panel palette-panel"><h3>Question Palette</h3><div id="palette" class="palette"></div><div class="legend"><span>🟩 Answered</span><span>⬜ Not answered</span><span>🟨 Review</span></div><button class="primary full" id="submitExam">Submit examination</button></aside>
+  </div>
+</section>
+<section id="resultView" class="hidden panel result-panel"><div class="eyebrow">EXAMINATION REPORT</div><h1>Result / परिणाम</h1><div id="resultContent"></div><button class="primary" id="downloadResult">Download Rank Card (Print / PDF)</button><button class="outline" id="backToStudent">Back to dashboard</button></section>
+</main>
+<footer>© Tejas Institute · Online Examination Portal</footer>
+<script src="app.js"></script>
+</body></html>
